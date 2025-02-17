@@ -1,16 +1,16 @@
 FROM node:18
 
 # Set the working directory inside the container
-WORKDIR /app  # Change from /src to /app to match the correct path
+WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json first for better caching
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
+# Copy the entire project into the container
 COPY . . 
 
 # Set the default command to run the server
-CMD ["node", "server.js"]
+CMD ["node", "src/server.js"]
