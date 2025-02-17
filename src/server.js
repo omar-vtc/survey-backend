@@ -26,6 +26,7 @@ app.get("/", async (req, res) => {
 
 // 📌 API to Save User Data (without Word file generation)
 app.post("/submit", async (req, res) => {
+  console.log("Request received at /submit:", req.body);
   try {
     const userData = req.body;
 
