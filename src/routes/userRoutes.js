@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User", UserSchema);
 
 // 📌 POST route to save user data
-router.post("/submit", async (req, res) => {
+router.post("/call", async (req, res) => {
   console.log("Request received at /submit:", req.body);
   try {
     const userData = req.body;
