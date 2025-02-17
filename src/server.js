@@ -10,8 +10,11 @@ require("dotenv").config();
 const app = express();
 app.set("trust proxy", 1); // Add this line here
 app.use(express.json());
-app.use(cors());
-
+const corsOptions = {
+  origin: "*", // allow all domains (or specify a specific domain)
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allow the necessary methods
+};
+app.use(cors(corsOptions));
 // 📌 Connect to MongoDB
 connectDB()
   .then(() => console.log("✅ Database connection established"))
