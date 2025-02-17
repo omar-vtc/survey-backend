@@ -8,6 +8,7 @@ const userRoutes = require("./routes/userRoutes"); // Import routes
 require("dotenv").config();
 
 const app = express();
+app.set("trust proxy", 1); // Add this line here
 app.use(express.json());
 app.use(cors());
 
