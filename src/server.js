@@ -20,6 +20,10 @@ connectDB()
 // 📌 Define User Model
 const User = mongoose.model("User", UserSchema);
 
+app.get("/", async (req, res) => {
+  console.log("hello");
+});
+
 // 📌 API to Save User Data (without Word file generation)
 app.post("/submit", async (req, res) => {
   try {
