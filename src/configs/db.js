@@ -5,7 +5,7 @@ require("dotenv").config(); // Load environment variables from .env
 console.log("process.env.MONGO_URI ", process.env.MONGO_URI);
 
 const uri = process.env.MONGO_URI; // Use environment variable for security
-
+console.log("uri => ", uri);
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {

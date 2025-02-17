@@ -12,5 +12,8 @@ RUN npm install
 # Copy the entire project into the container
 COPY . . 
 
+# Copy the .env file
+COPY .env .env
+
 # Set the default command to run the server
 CMD ["node", "src/server.js"]
