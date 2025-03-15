@@ -31,23 +31,6 @@ app.get("/", async (req, res) => {
   res.send("Server is running");
 });
 
-// 📌 API to Save User Data (without Word file generation)
-// app.post("/submit", async (req, res) => {
-//   console.log("Request received at /submit:", req.body);
-//   try {
-//     const userData = req.body;
-
-//     // Save user data to MongoDB
-//     const newUser = new User(userData);
-//     await newUser.save();
-
-//     res.json({ message: "Data saved successfully", res: req.body });
-//   } catch (err) {
-//     console.error("❌ Error saving user:", err);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
 app.use("/api/users", userRoutes); // Prefix '/api/users' for all user-related routes
 
 // 📌 Start Server
