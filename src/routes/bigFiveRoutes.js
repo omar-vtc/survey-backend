@@ -12,12 +12,14 @@ router.post("/bigfive", async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    const newAnswers = answers.questions;
+    console.log("newAnswers => ", newAnswers);
     // Find existing document by phone
     const existingUser = await DataModel.findOne({ phone });
 
     if (existingUser) {
       // Update existing user
-      existingUser.answers = answers;
+      existingUser.answers = newAnswers;
       existingUser.scores = scores;
       await existingUser.save();
       return res.json({
@@ -27,7 +29,7 @@ router.post("/bigfive", async (req, res) => {
     }
 
     // Create a new document if user does not exist
-    const newUser = new DataModel({ phone, answers, scores });
+    const newUser = new DataModel({ phone, newAnswers, scores });
     await newUser.save();
 
     res.status(201).json({ message: "Data saved successfully", data: newUser });
