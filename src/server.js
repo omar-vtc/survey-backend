@@ -4,6 +4,7 @@ const connectDB = require("./configs/db"); // Import the MongoDB connection func
 const { UserSchema } = require("./models/UserSchema");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes"); // Import routes
+const authRoutes = require("./routes/authRoutes");
 
 require("dotenv").config();
 
@@ -31,6 +32,7 @@ app.get("/", async (req, res) => {
   res.send("Server is running");
 });
 
+app.use("/api/auth", authRoutes); //registeration route
 app.use("/api/users", userRoutes); // Prefix '/api/users' for all user-related routes
 
 // 📌 Start Server
