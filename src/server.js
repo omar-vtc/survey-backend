@@ -5,6 +5,7 @@ const { UserSchema } = require("./models/UserSchema");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes"); // Import routes
 const authRoutes = require("./routes/authRoutes");
+const bigFiveRoutes = require("./routes/bigFiveRoutes");
 
 require("dotenv").config();
 
@@ -34,6 +35,7 @@ app.get("/", async (req, res) => {
 
 app.use("/api/auth", authRoutes); //registeration route
 app.use("/api/users", userRoutes); // Prefix '/api/users' for all user-related routes
+app.use("/api", bigFiveRoutes); // Mount the routes
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;

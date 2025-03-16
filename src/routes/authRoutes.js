@@ -2,19 +2,61 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const Users = require("../models/UserRegisteration");
+const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
+
 const router = express.Router();
 
 // 📌 Register User (Sign Up)
 router.post("/register", async (req, res) => {
-  const { phone, password } = req.body;
-  console.log(req.body);
+  const {
+    name,
+    email,
+    phone,
+    password,
+    age,
+    gender,
+    birthday,
+    job,
+    nationality,
+    education,
+    maritalStatus,
+  } = req.body;
+
+  // Validate required fields
+  if (
+    !name ||
+    !email ||
+    !phone ||
+    !password ||
+    !age ||
+    !gender ||
+    !birthday ||
+    !job ||
+    !nationality ||
+    !education ||
+    !maritalStatus
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
   try {
     let user = await Users.findOne({ phone });
     if (user)
       return res.status(400).json({ message: "Phone number already exists" });
 
-    user = new Users({ phone, password });
+    user = new Users({
+      name,
+      email,
+      phone,
+      password,
+      age,
+      gender,
+      birthday,
+      job,
+      nationality,
+      education,
+      maritalStatus,
+    });
     await user.save();
 
     res.status(201).json({ message: "User registered successfully" });
@@ -43,39 +85,30 @@ router.post("/login", async (req, res) => {
 
     res.json({ token, userId: user._id });
   } catch (error) {
+    console.error("❌ Login error:", error);
     res.status(500).json({ message: "Server error", error });
   }
 });
 
 // 📌 Logout User
-router.post("/logout", async (req, res) => {
+router.post("/logout", authenticateUser, async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Not authorized" });
-
-    const user = await Users.findOne({ token });
-    if (!user) return res.status(401).json({ message: "Invalid token" });
-
-    user.token = null; // Remove token from the database
-    await user.save();
+    req.user.token = null; // Remove token from the database
+    await req.user.save();
 
     res.json({ message: "Logged out successfully" });
   } catch (error) {
+    console.error("❌ Logout error:", error);
     res.status(500).json({ message: "Server error", error });
   }
 });
 
-// 📌 Protected Route Example
-router.get("/profile", async (req, res) => {
+// 📌 Protected Route Example (Profile)
+router.get("/profile", authenticateUser, async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Not authorized" });
-
-    const user = await Users.findOne({ token }).select("-password");
-    if (!user) return res.status(401).json({ message: "Invalid token" });
-
-    res.json(user);
+    res.json(req.user);
   } catch (error) {
+    console.error("❌ Profile error:", error);
     res.status(500).json({ message: "Server error", error });
   }
 });

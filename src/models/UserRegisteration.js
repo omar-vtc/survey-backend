@@ -4,8 +4,21 @@ const crypto = require("crypto");
 
 const UserRegisteration = new mongoose.Schema(
   {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    age: { type: Number, required: true },
+    gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
+    birthday: { type: Date, required: true },
+    job: { type: String, required: true },
+    nationality: { type: String, required: true },
+    education: { type: String, required: true },
+    maritalStatus: {
+      type: String,
+      enum: ["Single", "Married", "Divorced", "Widowed"],
+      required: true,
+    },
     token: { type: String, default: null }, // Store the authentication token
   },
   { timestamps: true }
@@ -29,5 +42,5 @@ UserRegisteration.methods.generateToken = function () {
   return crypto.randomBytes(32).toString("hex");
 };
 
-const Users = mongoose.model("UserRegisteration", UserRegisteration);
+const Users = mongoose.model("User-Registeration", UserRegisteration);
 module.exports = Users;
