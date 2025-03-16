@@ -4,6 +4,8 @@ const connectDB = require("./configs/db"); // Import the MongoDB connection func
 const { UserSchema } = require("./models/UserSchema");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes"); // Import routes
+const authRoutes = require("./routes/authRoutes");
+const bigFiveRoutes = require("./routes/bigFiveRoutes");
 
 require("dotenv").config();
 
@@ -31,24 +33,9 @@ app.get("/", async (req, res) => {
   res.send("Server is running");
 });
 
-// 📌 API to Save User Data (without Word file generation)
-// app.post("/submit", async (req, res) => {
-//   console.log("Request received at /submit:", req.body);
-//   try {
-//     const userData = req.body;
-
-//     // Save user data to MongoDB
-//     const newUser = new User(userData);
-//     await newUser.save();
-
-//     res.json({ message: "Data saved successfully", res: req.body });
-//   } catch (err) {
-//     console.error("❌ Error saving user:", err);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
+app.use("/api/auth", authRoutes); //registeration route
 app.use("/api/users", userRoutes); // Prefix '/api/users' for all user-related routes
+app.use("/api", bigFiveRoutes); // Mount the routes
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;
