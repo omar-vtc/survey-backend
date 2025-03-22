@@ -1,6 +1,4 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
 const Users = require("../models/UserRegisteration");
 const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
 
@@ -8,34 +6,10 @@ const router = express.Router();
 
 // 📌 Register User (Sign Up)
 router.post("/register", async (req, res) => {
-  const {
-    name,
-    email,
-    phone,
-    password,
-    age,
-    gender,
-    birthday,
-    job,
-    nationality,
-    education,
-    maritalStatus,
-  } = req.body;
+  const { name, phone, age, gender, job } = req.body;
 
   // Validate required fields
-  if (
-    !name ||
-    !email ||
-    !phone ||
-    !password ||
-    !age ||
-    !gender ||
-    !birthday ||
-    !job ||
-    !nationality ||
-    !education ||
-    !maritalStatus
-  ) {
+  if (!name || !phone || !age || !gender || !job) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -46,16 +20,10 @@ router.post("/register", async (req, res) => {
 
     user = new Users({
       name,
-      email,
       phone,
-      password,
       age,
       gender,
-      birthday,
       job,
-      nationality,
-      education,
-      maritalStatus,
     });
     await user.save();
 
@@ -66,24 +34,17 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// 📌 Login User (Sign In)
+// 📌 Login User (Sign In) with Phone Number Only
 router.post("/login", async (req, res) => {
-  const { phone, password } = req.body;
+  const { phone } = req.body;
 
   try {
     const user = await Users.findOne({ phone });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const isMatch = await user.matchPassword(password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid credentials" });
-
-    // Generate a secure random token
-    const token = user.generateToken();
-    user.token = token;
+    res.json({ userId: user._id });
+    user.isLoggedIn = true;
     await user.save();
-
-    res.json({ token, userId: user._id });
   } catch (error) {
     console.error("❌ Login error:", error);
     res.status(500).json({ message: "Server error", error });
@@ -106,7 +67,7 @@ router.post("/logout", authenticateUser, async (req, res) => {
 // 📌 Protected Route Example (Profile)
 router.get("/profile", authenticateUser, async (req, res) => {
   try {
-    res.json(req.user);
+    res.json(req.user); // Send user details based on phone authentication
   } catch (error) {
     console.error("❌ Profile error:", error);
     res.status(500).json({ message: "Server error", error });
