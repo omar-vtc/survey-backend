@@ -2,13 +2,14 @@ const Users = require("../models/UserRegisteration");
 
 const authenticateUser = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Not authorized" });
+    const phone = req.headers["x-user-phone"]; // Get phone number from headers
+    if (!phone)
+      return res.status(401).json({ message: "Phone number required" });
 
-    const user = await Users.findOne({ token });
-    if (!user) return res.status(401).json({ message: "Invalid token" });
+    const user = await Users.findOne({ phone });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-    req.user = user; // Attach user to request object
+    req.user = user; // Attach user object to request
     next();
   } catch (error) {
     console.error("❌ Authentication error:", error);
