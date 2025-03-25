@@ -6,9 +6,6 @@ const router = express.Router();
 router.post("/mbti", async (req, res) => {
   try {
     const { phone, MBTI, scores } = req.body;
-    console.log("phone", phone);
-    console.log(MBTI);
-    console.log(scores);
     if (!phone || !MBTI || !scores) {
       return res.status(400).json({ message: "Missing required fields" });
     }
