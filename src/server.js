@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes"); // Import routes
 const authRoutes = require("./routes/authRoutes");
 const bigFiveRoutes = require("./routes/bigFiveRoutes");
 const MBTIRoutes = require("./routes/MBTIRoutes");
+const machlanRoutes = require("./routes/machlanRoutes");
 
 require("dotenv").config();
 
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes); //registeration route
 app.use("/api/users", userRoutes); // Prefix '/api/users' for all user-related routes
 app.use("/api", bigFiveRoutes); // Mount the routes
 app.use("/api", MBTIRoutes);
+app.use("/api", machlanRoutes);
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;
