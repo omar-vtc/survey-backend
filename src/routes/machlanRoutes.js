@@ -7,10 +7,6 @@ router.post("/machlan", async (req, res) => {
   try {
     const { phone, answers, scores } = req.body;
 
-    console.log("phone --> ", phone);
-    console.log("answers: -> ", answers);
-    console.log(("scores:--> ", scores));
-
     if (!phone || !answers || !scores) {
       return res.status(400).json({ message: "Missing required fields" });
     }
