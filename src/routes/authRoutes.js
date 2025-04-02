@@ -9,6 +9,7 @@ router.route("/register").post(authController.register);
 router.route("/login").post(authController.login);
 router.route("/logout").post(authenticateUser, authController.logout);
 router.route("/profile").get(authenticateUser, authController.getProfile);
+
 // 📌 Register User (Sign Up)
 // router.post("/register", async (req, res) => {
 //   const { name, phone, age, gender, job } = req.body;
