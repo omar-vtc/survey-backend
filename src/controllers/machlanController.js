@@ -26,3 +26,25 @@ exports.addMachlanAns = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getMachlanAns = async (req, res) => {
+  try {
+    const { phone } = req.params;
+
+    if (!phone) {
+      return res.status(400).json({ message: "Phone number is required" });
+    }
+
+    // Find user by phone number
+    const userData = await DataModel.findOne({ phone });
+
+    if (!userData) {
+      return res.status(404).json({ message: "User data not found" });
+    }
+
+    res.json({ message: "Data retrieved successfully", data: userData });
+  } catch (error) {
+    console.error("❌ Error fetching data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
