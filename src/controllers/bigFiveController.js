@@ -43,13 +43,21 @@ exports.getBigFiveAns = async (req, res) => {
     }
 
     // Find user by phone number
-    const userData = await DataModel.findOne({ phone });
+    let userData = await DataModel.findOne({ phone });
 
     if (!userData) {
       return res.status(404).json({ message: "User data not found" });
     }
 
-    res.json({ message: "Data retrieved successfully", data: userData });
+    const userWithUpdatedData = {
+      ...userData.toObject(), // Convert Mongoose document to plain object
+      name: "Big Five", // Replace with dynamic name if available
+    };
+
+    res.json({
+      message: "Data retrieved successfully",
+      data: userWithUpdatedData,
+    });
   } catch (error) {
     console.error("❌ Error fetching data:", error);
     res.status(500).json({ message: "Internal server error" });

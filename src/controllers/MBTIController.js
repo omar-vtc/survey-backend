@@ -42,7 +42,15 @@ exports.getMBTIAns = async (req, res) => {
       return res.status(404).json({ message: "User data not found" });
     }
 
-    res.json({ message: "Data retrieved successfully", data: userData });
+    const userWithUpdatedData = {
+      ...userData.toObject(), // Convert Mongoose document to plain object
+      name: "MBTI", // Replace with dynamic name if available
+    };
+
+    res.json({
+      message: "Data retrieved successfully",
+      data: userWithUpdatedData,
+    });
   } catch (error) {
     console.error("❌ Error fetching data:", error);
     res.status(500).json({ message: "Internal server error" });
