@@ -1,5 +1,4 @@
 const Users = require("../models/UserRegisteration");
-const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
 
 exports.register = async (req, res) => {
   const { name, phone, age, gender, job } = req.body;

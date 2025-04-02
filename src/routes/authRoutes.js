@@ -1,5 +1,4 @@
 const express = require("express");
-const Users = require("../models/UserRegisteration");
 const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
 const authController = require("../controllers/authController");
 
