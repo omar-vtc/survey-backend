@@ -42,14 +42,14 @@ exports.getMBTIAns = async (req, res) => {
       return res.status(404).json({ message: "User data not found" });
     }
 
-    const userWithUpdatedData = {
-      ...userData.toObject(), // Convert Mongoose document to plain object
-      name: "MBTI", // Replace with dynamic name if available
-    };
-
+    // const userWithUpdatedData = {
+    //   ...userData.toObject(), // Convert Mongoose document to plain object
+    //   name: "MBTI", // Replace with dynamic name if available
+    // };
+    // console.log(userData);
     res.json({
       message: "Data retrieved successfully",
-      data: userWithUpdatedData,
+      data: userData,
     });
   } catch (error) {
     console.error("❌ Error fetching data:", error);
