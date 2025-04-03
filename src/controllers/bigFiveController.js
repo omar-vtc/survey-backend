@@ -49,10 +49,23 @@ exports.getBigFiveAns = async (req, res) => {
       return res.status(404).json({ message: "User data not found" });
     }
 
-    const userWithUpdatedData = {
-      ...userData.toObject(), // Convert Mongoose document to plain object
-      name: "Big Five", // Replace with dynamic name if available
-    };
+    // Convert Mongoose document to a plain object
+    const userWithUpdatedData = userData.toObject();
+
+    // Convert Map fields to plain objects
+    if (userWithUpdatedData.answers instanceof Map) {
+      userWithUpdatedData.answers = Object.fromEntries(
+        userWithUpdatedData.answers
+      );
+    }
+
+    if (userWithUpdatedData.scores instanceof Map) {
+      userWithUpdatedData.scores = Object.fromEntries(
+        userWithUpdatedData.scores
+      );
+    }
+
+    userWithUpdatedData.name = userWithUpdatedData.name || "BigFive"; // Default to "MBTI" if not available
 
     res.json({
       message: "Data retrieved successfully",
