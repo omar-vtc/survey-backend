@@ -42,14 +42,28 @@ exports.getMBTIAns = async (req, res) => {
       return res.status(404).json({ message: "User data not found" });
     }
 
-    // const userWithUpdatedData = {
-    //   ...userData.toObject(), // Convert Mongoose document to plain object
-    //   name: "MBTI", // Replace with dynamic name if available
-    // };
-    // console.log(userData);
+    // Convert Mongoose document to a plain object
+    const userWithUpdatedData = userData.toObject();
+
+    // Convert Map fields to plain objects
+    if (userWithUpdatedData.MBTI instanceof Map) {
+      userWithUpdatedData.MBTI = Object.fromEntries(userWithUpdatedData.MBTI);
+    }
+
+    if (userWithUpdatedData.scores instanceof Map) {
+      userWithUpdatedData.scores = Object.fromEntries(
+        userWithUpdatedData.scores
+      );
+    }
+
+    // Adding/Modifying the `name` field
+    userWithUpdatedData.name = userWithUpdatedData.name || "MBTI"; // Default to "MBTI" if not available
+
+    // console.log(userWithUpdatedData);
+    // console.log(userWithUpdatedData);
     res.json({
       message: "Data retrieved successfully",
-      data: userData,
+      data: userWithUpdatedData,
     });
   } catch (error) {
     console.error("❌ Error fetching data:", error);
