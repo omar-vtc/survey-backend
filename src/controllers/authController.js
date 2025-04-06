@@ -1,5 +1,4 @@
 const Users = require("../models/UserRegisteration");
-const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
 
 exports.register = async (req, res) => {
   const { name, phone, age, gender, job } = req.body;
@@ -63,6 +62,16 @@ exports.getProfile = async (req, res) => {
     res.json(req.user); // Send user details based on phone authentication
   } catch (error) {
     console.error("❌ Profile error:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await Users.find(); // Fetch all users
+    res.json(users);
+  } catch (error) {
+    console.error("❌ Error fetching users:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };

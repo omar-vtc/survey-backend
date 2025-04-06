@@ -41,5 +41,6 @@ const router = express.Router();
 // });
 
 router.route("/bigfive").post(bigFiveController.addBigFiveAns);
+router.route("/bigfive/:phone").get(bigFiveController.getBigFiveAns);
 
 module.exports = router;

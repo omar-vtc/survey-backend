@@ -26,3 +26,47 @@ exports.addMBTIAns = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getMBTIAns = async (req, res) => {
+  try {
+    const { phone } = req.params;
+
+    if (!phone) {
+      return res.status(400).json({ message: "Phone number is required" });
+    }
+
+    // Find user by phone number
+    const userData = await MBTIModel.findOne({ phone });
+
+    if (!userData) {
+      return res.status(404).json({ message: "User data not found" });
+    }
+
+    // Convert Mongoose document to a plain object
+    const userWithUpdatedData = userData.toObject();
+
+    // Convert Map fields to plain objects
+    if (userWithUpdatedData.MBTI instanceof Map) {
+      userWithUpdatedData.MBTI = Object.fromEntries(userWithUpdatedData.MBTI);
+    }
+
+    if (userWithUpdatedData.scores instanceof Map) {
+      userWithUpdatedData.scores = Object.fromEntries(
+        userWithUpdatedData.scores
+      );
+    }
+
+    // Adding/Modifying the `name` field
+    userWithUpdatedData.name = userWithUpdatedData.name || "MBTI"; // Default to "MBTI" if not available
+
+    // console.log(userWithUpdatedData);
+    // console.log(userWithUpdatedData);
+    res.json({
+      message: "Data retrieved successfully",
+      data: userWithUpdatedData,
+    });
+  } catch (error) {
+    console.error("❌ Error fetching data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

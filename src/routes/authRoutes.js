@@ -1,5 +1,4 @@
 const express = require("express");
-const Users = require("../models/UserRegisteration");
 const authenticateUser = require("../middleware/authMiddleware"); // Import middleware
 const authController = require("../controllers/authController");
 
@@ -9,6 +8,7 @@ router.route("/register").post(authController.register);
 router.route("/login").post(authController.login);
 router.route("/logout").post(authenticateUser, authController.logout);
 router.route("/profile").get(authenticateUser, authController.getProfile);
+router.route("/users").get(authController.getAllUsers);
 
 // 📌 Register User (Sign Up)
 // router.post("/register", async (req, res) => {

@@ -33,3 +33,46 @@ exports.addBigFiveAns = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getBigFiveAns = async (req, res) => {
+  try {
+    const { phone } = req.params;
+
+    if (!phone) {
+      return res.status(400).json({ message: "Phone number is required" });
+    }
+
+    // Find user by phone number
+    let userData = await DataModel.findOne({ phone });
+
+    if (!userData) {
+      return res.status(404).json({ message: "User data not found" });
+    }
+
+    // Convert Mongoose document to a plain object
+    const userWithUpdatedData = userData.toObject();
+
+    // Convert Map fields to plain objects
+    if (userWithUpdatedData.answers instanceof Map) {
+      userWithUpdatedData.answers = Object.fromEntries(
+        userWithUpdatedData.answers
+      );
+    }
+
+    if (userWithUpdatedData.scores instanceof Map) {
+      userWithUpdatedData.scores = Object.fromEntries(
+        userWithUpdatedData.scores
+      );
+    }
+
+    userWithUpdatedData.name = userWithUpdatedData.name || "BigFive"; // Default to "MBTI" if not available
+
+    res.json({
+      message: "Data retrieved successfully",
+      data: userWithUpdatedData,
+    });
+  } catch (error) {
+    console.error("❌ Error fetching data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
