@@ -46,7 +46,7 @@ exports.getBigFiveAns = async (req, res) => {
     let userData = await DataModel.findOne({ phone });
 
     if (!userData) {
-      return res.status(404).json({ message: "User data not found" });
+      return res.json({ message: "No data found", data: {} });
     }
 
     // Convert Mongoose document to a plain object
