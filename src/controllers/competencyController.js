@@ -14,7 +14,7 @@ exports.addCompetency = async (req, res) => {
     if (existing) {
       existing.answers = answers;
       existing.scores = scores;
-      existing.totals = scores;
+      existing.totals = totals;
       await existing.save();
       return res.json({
         message: "Data updated successfully",
@@ -49,8 +49,10 @@ exports.getCompetency = async (req, res) => {
     const userWithUpdatedData = userData.toObject();
 
     // Convert Map fields to plain objects
-    if (userWithUpdatedData.MBTI instanceof Map) {
-      userWithUpdatedData.MBTI = Object.fromEntries(userWithUpdatedData.MBTI);
+    if (userWithUpdatedData.answers instanceof Map) {
+      userWithUpdatedData.answers = Object.fromEntries(
+        userWithUpdatedData.answers
+      );
     }
 
     if (userWithUpdatedData.scores instanceof Map) {
@@ -59,11 +61,17 @@ exports.getCompetency = async (req, res) => {
       );
     }
 
+    if (userWithUpdatedData.totals instanceof Map) {
+      userWithUpdatedData.totals = Object.fromEntries(
+        userWithUpdatedData.totals
+      );
+    }
+
     // Adding/Modifying the `name` field
     userWithUpdatedData.name = userWithUpdatedData.name || "Competency"; // Default to "MBTI" if not available
 
     // console.log(userWithUpdatedData);
-    // console.log(userWithUpdatedData);
+    console.log(userWithUpdatedData);
     res.json({
       message: "Data retrieved successfully",
       data: userWithUpdatedData,
