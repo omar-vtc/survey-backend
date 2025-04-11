@@ -11,13 +11,7 @@ const CompetencySchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true }, // Ensuring phone is unique
   answers: {
     type: Map,
-    of: {
-      type: Map,
-      of: {
-        type: Map,
-        of: answerSchema,
-      }, // Default to empty Map if not provided
-    },
+    of: mongoose.Schema.Types.Mixed,
   },
   scores: {
     type: Map,
