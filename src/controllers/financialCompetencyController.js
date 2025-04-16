@@ -68,7 +68,8 @@ exports.getCompetency = async (req, res) => {
     }
 
     // Adding/Modifying the `name` field
-    userWithUpdatedData.name = userWithUpdatedData.name || "Competency"; // Default to "MBTI" if not available
+    userWithUpdatedData.name =
+      userWithUpdatedData.name || "Financial-Competency"; // Default to "MBTI" if not available
 
     // console.log(userWithUpdatedData);
     // console.log(userWithUpdatedData);
