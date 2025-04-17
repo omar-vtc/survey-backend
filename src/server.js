@@ -9,6 +9,7 @@ const bigFiveRoutes = require("./routes/bigFiveRoutes");
 const MBTIRoutes = require("./routes/MBTIRoutes");
 const machlanRoutes = require("./routes/machlanRoutes");
 const competencyRoutes = require("./routes/competencyRoutes");
+const financialCompetencyRoutes = require("./routes/financialCompetencyRoutes");
 
 require("dotenv").config();
 
@@ -42,6 +43,7 @@ app.use("/api", bigFiveRoutes); // Mount the routes
 app.use("/api", MBTIRoutes);
 app.use("/api", machlanRoutes);
 app.use("/api", competencyRoutes);
+app.use("/api", financialCompetencyRoutes);
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;
