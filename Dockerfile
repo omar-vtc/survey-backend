@@ -13,7 +13,7 @@ RUN npm install
 COPY . . 
 
 # Copy the .env file
-COPY src/.env .env
+# COPY src/.env .env
 
 # Set the default command to run the server
 CMD ["node", "src/server.js"]
