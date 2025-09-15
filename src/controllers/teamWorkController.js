@@ -1,4 +1,4 @@
-const TeamWorkModel = require("../models/TeamWorkSchema");
+const DataModel = require("../models/TeamWorkSchema");
 
 exports.addMachlanAns = async (req, res) => {
   try {
