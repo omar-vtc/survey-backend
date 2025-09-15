@@ -9,6 +9,7 @@ const bigFiveRoutes = require("./routes/bigFiveRoutes");
 const MBTIRoutes = require("./routes/MBTIRoutes");
 const machlanRoutes = require("./routes/machlanRoutes");
 const teamWorkRoutes = require("./routes/teamWorkRoutes");
+const stressRoutes = require("./routes/stressRoutes");
 
 const competencyRoutes = require("./routes/competencyRoutes");
 const financialCompetencyRoutes = require("./routes/financialCompetencyRoutes");
@@ -47,6 +48,7 @@ app.use("/api", machlanRoutes);
 app.use("/api", competencyRoutes);
 app.use("/api", financialCompetencyRoutes);
 app.use("/api", teamWorkRoutes);
+app.use("/api", stressRoutes);
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;
