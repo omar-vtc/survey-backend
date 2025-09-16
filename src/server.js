@@ -12,6 +12,7 @@ const teamWorkRoutes = require("./routes/teamWorkRoutes");
 const leadershipRoutes = require("./routes/leadershipRoutes");
 const personalCompetencyRoutes = require("./routes/personalCompetencyRoutes");
 const hollandRoutes = require("./routes/hollandRoutes");
+const cdsRoutes = require("./routes/cdsRoutes");
 
 const patternsRoutes = require("./routes/patternsRoutes");
 
@@ -59,6 +60,7 @@ app.use("/api", leadershipRoutes);
 app.use("/api", personalCompetencyRoutes);
 app.use("/api", patternsRoutes);
 app.use("/api", hollandRoutes);
+app.use("/api", cdsRoutes);
 
 // 📌 Start Server
 const PORT = process.env.PORT || 8080;
