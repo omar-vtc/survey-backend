@@ -1,4 +1,4 @@
-const DataModel = require("../models/hollandSchema");
+const DataModel = require("../models/HollandSchema");
 
 exports.addMachlanAns = async (req, res) => {
   try {
