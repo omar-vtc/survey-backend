@@ -44,7 +44,7 @@ exports.getMachlanAns = async (req, res) => {
 
     const userWithUpdatedData = {
       ...userData.toObject(), // Convert Mongoose document to plain object
-      name: "Team Work", // Replace with dynamic name if available
+      name: "teamwork", // Replace with dynamic name if available
     };
 
     res.json({

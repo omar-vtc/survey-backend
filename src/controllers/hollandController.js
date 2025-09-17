@@ -48,9 +48,11 @@ exports.getMachlanAns = async (req, res) => {
       return res.json({ message: "No data found", data: {} });
     }
 
+    // Convert Map fields to plain objects
     const userWithUpdatedData = {
-      ...userData.toObject(), // Convert Mongoose doc to plain object
-      name: "Team Work", // Placeholder, can make dynamic if needed
+      ...userData.toObject(),
+      scores: userData.scores ? Object.fromEntries(userData.scores) : {},
+      name: "holland", // replace with dynamic if needed
     };
 
     res.json({

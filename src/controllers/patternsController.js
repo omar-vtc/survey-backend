@@ -39,10 +39,12 @@ exports.getMachlanAns = async (req, res) => {
       return res.json({ message: "No data found", data: {} });
     }
 
-    // Add custom field
+    // Convert Map fields to plain objects
     const userWithUpdatedData = {
       ...userData.toObject(),
-      name: "Team Work",
+      answers: userData.answers ? Object.fromEntries(userData.answers) : {},
+      scores: userData.scores ? Object.fromEntries(userData.scores) : {},
+      name: "pattern_scale", // replace with dynamic name if needed
     };
 
     return res.json({
