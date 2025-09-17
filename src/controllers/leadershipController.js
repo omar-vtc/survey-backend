@@ -56,7 +56,7 @@ exports.getMachlanAns = async (req, res) => {
     const response = {
       ...userData.toObject(),
       answers: answersObj,
-      name: "Team Work", // replace with dynamic name if needed
+      name: "leadership", // replace with dynamic name if needed
     };
 
     res.json({

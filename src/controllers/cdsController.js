@@ -52,7 +52,7 @@ exports.getMachlanAns = async (req, res) => {
 
     const userWithUpdatedData = {
       ...userData.toObject(),
-      name: "مقياس التشوهات المعرفية (CDS)", // more descriptive than "Team Work"
+      name: "cds", // more descriptive than "Team Work"
     };
 
     res.json({

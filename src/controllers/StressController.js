@@ -50,7 +50,7 @@ exports.getMachlanAns = async (req, res) => {
 
     const userWithUpdatedData = {
       ...userData.toObject(),
-      name: "Team Work", // static name, replace with dynamic if needed
+      name: "work_Stress", // static name, replace with dynamic if needed
     };
 
     res.json({
